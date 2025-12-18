@@ -26,7 +26,7 @@
 export { createAgentLanding, clearLandingCache, type MiddlewareOptions, type AgentCardInput } from './middleware.js'
 
 // Generator function for advanced use
-export { generateLandingPage, type GeneratorOptions, type CustomSection } from './generator.js'
+export { generateLandingPage, type GeneratorOptions, type CustomSection, type MetaOptions } from './generator.js'
 
 // Types
 export type { AgentCard, AgentSkill, SupportedSymbols, PricingInfo } from './types.js'

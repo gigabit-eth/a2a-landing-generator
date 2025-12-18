@@ -23,6 +23,12 @@ export interface CustomSection {
     content: string
 }
 
+export interface MetaOptions {
+    ogImage?: string
+    favicon?: string
+    twitterCard?: 'summary' | 'summary_large_image'
+}
+
 export interface GeneratorOptions {
     theme?: 'dark' | 'light' | Theme
     showPaymentFlow?: boolean
@@ -30,6 +36,7 @@ export interface GeneratorOptions {
     showAgentCard?: boolean
     customSections?: CustomSection[]
     footer?: FooterOptions
+    meta?: MetaOptions
 }
 
 function resolveTheme(themeOption?: 'dark' | 'light' | Theme): Theme {
@@ -294,6 +301,10 @@ export function generateLandingPage(agentCard: AgentCard, options: GeneratorOpti
     const showSymbols = options.showSymbols !== false
     const showAgentCard = options.showAgentCard !== false
 
+    const ogImage = options.meta?.ogImage
+    const favicon = options.meta?.favicon
+    const twitterCard = options.meta?.twitterCard || 'summary_large_image'
+
     return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -301,6 +312,24 @@ export function generateLandingPage(agentCard: AgentCard, options: GeneratorOpti
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${escapeHtml(agentCard.name)} - A2A Agent</title>
   <meta name="description" content="${escapeHtml(agentCard.description)}">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="${escapeHtml(agentCard.name)}">
+  <meta property="og:description" content="${escapeHtml(agentCard.description)}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="${escapeHtml(agentCard.url)}">
+  ${ogImage ? `<meta property="og:image" content="${escapeHtml(ogImage)}">` : ''}
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="${twitterCard}">
+  <meta name="twitter:title" content="${escapeHtml(agentCard.name)}">
+  <meta name="twitter:description" content="${escapeHtml(agentCard.description)}">
+  ${ogImage ? `<meta name="twitter:image" content="${escapeHtml(ogImage)}">` : ''}
+  
+  <!-- Favicon -->
+  ${favicon ? `<link rel="icon" href="${escapeHtml(favicon)}" type="image/x-icon">` : ''}
+  ${favicon ? `<link rel="shortcut icon" href="${escapeHtml(favicon)}" type="image/x-icon">` : ''}
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
