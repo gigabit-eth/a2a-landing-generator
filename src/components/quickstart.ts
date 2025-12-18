@@ -8,15 +8,15 @@ import type { AgentCard } from '../types.js'
 import type { Theme } from '../themes/types.js'
 
 export function renderQuickstart(agentCard: AgentCard, theme: Theme): string {
-    const { url, skills } = agentCard
+  const { url, skills } = agentCard
 
-    // Use first skill for example, or default to message/send
-    const exampleMethod = skills[0]?.id || 'message/send'
-    const exampleParams = skills[0]?.examples?.[0]
-        ? `{"symbol":"${skills[0].examples[0]}"}`
-        : '{}'
+  // Use first skill for example, or default to message/send
+  const exampleMethod = skills[0]?.id || 'message/send'
+  const exampleParams = skills[0]?.examples?.[0]
+    ? `{"symbol":"${skills[0].examples[0]}"}`
+    : '{}'
 
-    return `
+  return `
     <section>
       <h2>⚡ Quick Start</h2>
       <p style="color: var(--text-dim); margin-bottom: 1rem;">Get started with a single request. Payments handled automatically via x402.</p>
@@ -35,7 +35,12 @@ export function renderQuickstart(agentCard: AgentCard, theme: Theme): string {
         <h3>Response (after x402 payment)</h3>
         <pre>{
   "jsonrpc": "2.0",
-  "result": { ... },
+  "result": {
+    "symbol": "BTCUSDT",
+    "price": 86047.98,
+    "source": "Polymarket (Binance)",
+    "timestamp": ${Date.now()}
+  },
   "id": 1
 }</pre>
       </div>
@@ -43,11 +48,11 @@ export function renderQuickstart(agentCard: AgentCard, theme: Theme): string {
 }
 
 function escapeHtml(str: string | undefined): string {
-    if (!str) return ''
-    return str
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;')
+  if (!str) return ''
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
 }
