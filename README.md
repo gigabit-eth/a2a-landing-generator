@@ -1,4 +1,4 @@
-# @cart.fun/agentcard-pages
+# @cart.fun/a2a-pages
 
 > Generate beautiful developer documentation pages from agent card JSON
 
